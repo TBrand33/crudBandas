@@ -19,7 +19,13 @@ class CursoController extends Controller
 
     public function salvar(Request $request){
        $dados = $request->all();
-        
+       if (isset($dados['publicado'])) {
+            $dados['publicado'] = 'sim';
+        } 
+        else {
+            $dados['publicado'] = 'não'; 
+        }
+    
         if($request->hasFile('arquivo')){
             $imagem = $request->file('arquivo');
             $num = rand(1111,9999);
@@ -40,16 +46,24 @@ class CursoController extends Controller
 
     public function atualizar(Request $request, $id){
         $dados = $request->all();
-        
-        if($request->hasFile('arquivo')){
-            $imagem = $request->file('arquivo');
-            $num = rand(1111,9999);
-            $dir = "img/cursos/";
-            $ex = $imagem->guessClientExtension();
-            $nomeImagem = "imagem_".$num.".".$ex;
-            $imagem->move($dir,$nomeImagem);
-            $dados['imagem'] = $dir.$nomeImagem;
+
+        if (isset($dados['publicado'])) {
+            $dados['publicado'] = 'sim';
+        } 
+        else {
+            $dados['publicado'] = 'não'; 
         }
+
+        if ($request->hasFile('imagem')) {
+        $imagem = $request->file('imagem');
+        $num = rand(1111, 9999); 
+        $dir = "img/cursos/";
+        $ext = $imagem->guessClientExtension();
+        $nomeImagem = "imagem_" . $num . "." . $ext;
+        $imagem->move($dir, $nomeImagem);
+        
+        $dados['imagem'] = $dir . "/" . $nomeImagem;
+    }
         Curso::find($id)->update($dados);
         return redirect()->route('admin.cursos');
     } 

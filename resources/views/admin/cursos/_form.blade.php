@@ -1,23 +1,23 @@
 <div class="input-field">
     <input type="text" name="titulo" value="{{ isset($row->titulo) ? $row->titulo : '' }}">
-    <label>Título</label>
+    <label class="{{ isset($row->titulo) ? 'active' : '' }}">Título</label>
 </div>
 
 <div class="input-field">
     <input type="text" name="descricao" value="{{ isset($row->descricao) ? $row->descricao : '' }}">
-    <label>Descrição</label>
+    <label class="{{ isset($row->descricao) ? 'active' : '' }}">Descrição</label>
 </div>
 
 <div class="input-field">
-    <input type="text" name="valor" value="{{isset($row->valor) ? $row->valor : ''}}">
-    <label>Valor</label>
+    <input type="text" name="valor" value="{{ isset($row->valor) ? $row->valor : '' }}">
+    <label class="{{ isset($row->valor) ? 'active' : '' }}">Valor</label>
 </div>
 
 <div class="file-field input-field">
     <div class="btn blue">
 
      <span>Imagem</span>
-        <input type="file" name="arquivo">
+        <input type="file" name="imagem">
 </div>
    
 <div class="file-path-wrapper">
@@ -25,17 +25,17 @@
 </div>
 
 </div>
-    @if( isset($linha->imagem) )
-    <div class="input-field">
-        <img width="150" src="{{ asset($row->imagem) }}" />
-    </div>
+    @if( isset($row->imagem) )
+        <div class="input-field">
+        <img width="250" src="{{ asset($row->imagem) }}" />
+        </div>
     @endif
 
 <div class="input-field">
     <p>
         <label>
-                <input type="checkbox" name="publicado" value="checked"
-                {{ isset($linha->publicado) && $linha->publicado == 'sim' ? 'checked' : '' }}>
+            <input type="checkbox" name="publicado" value="checked"
+            {{ isset($row->publicado) && $row->publicado == 'sim' ? 'checked' : '' }}>
             <span>Publicar?</span>
         </label>
     </p>
